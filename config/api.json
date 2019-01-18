@@ -1,0 +1,123 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "v1",
+		"title": "MDR - Rest API",
+    	"description": "A Rest API using Node.js for a Merchant Discount Rates simulated application"
+	},
+	"host": "localhost",
+	"schemes": ["http", "https"],
+  	"basePath": "/",
+	"paths": {
+		"/mdr": {
+			"get": {
+				"tags": ["MDR"],
+				"operationId": "mdr_get",
+				"consumes": [],
+				"produces": ["application/json",
+				"text/json"],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/MDR"
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/mdr/{Adquirente}": {
+			"get": {
+				"tags": ["MDR"],
+				"operationId": "mdr_getByAdquirente",
+				"consumes": [],
+				"produces": ["application/json",
+				"text/json"],
+				"parameters": [{
+					"name": "Adquirente",
+					"in": "path",
+					"required": true,
+					"type": "string"
+				}],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/MDR"
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/transaction": {
+			"post": {
+				"tags": ["TRANSACTION"],
+				"operationId": "transaction_post",
+				"consumes": ["application/json"],
+				"produces": ["application/json",
+				"text/json"],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Final_Value"
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		}
+	},
+	"definitions": {
+		"MDR": {
+			"type": "object",
+			"properties": {
+				"Adquirente": {
+					"type": "string"
+				},
+				"Taxas": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/MDR_Taxes"
+					}
+				}
+			}
+		},
+		"MDR_Taxes": {
+			"type": "object",
+			"properties": {
+				"Bandeira": {
+					"type": "string"
+				},
+				"Credito": {
+					"format": "float",
+					"type": "number"
+				},
+				"Debito": {
+					"format": "float",
+					"type": "number"
+				}
+			}
+		},
+		"Final_Value": {
+			"type": "object",
+			"properties": {
+				"ValorLiquido": {
+					"format": "float",
+					"type": "number"
+				}
+			}
+		}
+	}
+}
